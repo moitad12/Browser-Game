@@ -42,13 +42,35 @@ function shuffleDeck () {
         deck[i] = deck[k]
         deck[k] = temp
     }
-    // console.log(deck)
+    console.log(deck)
 }
 
 // function to begin game
 function beginGame () {
     hidden = deck.pop()
     dealerSum += getValue(hidden)
+    dealerAceCount += checkAce(hidden)
+    // console.log(hidden);
+    // console.log(dealerSum);
+    while (dealerSum < 17){
+        let cardImg = document.createElement("img")
+        let card = deck.pop()
+        cardImg.src = "./cards/" + card + ".png"
+        dealerSum += getValue(card)
+        dealerAceCount += checkAce(card)
+        document.getElementById("dealers-cards").append(cardImg)
+    }
+    console.log(dealerSum)
+
+    for(let i = 0; i < 2; i++) {
+        let cardImg = document.createElement("img")
+        let card = deck.pop()
+        cardImg.src = "./cards/" + card + ".png"
+        mySum += getValue(card)
+        myAceCount += checkAce(card)
+        document.getElementById("my-cards").append(cardImg)
+    }
+    console.log(mySum)
 }
 
 function getValue (card) {
@@ -62,4 +84,12 @@ function getValue (card) {
         return 10
     }
     return parseInt(value)
+}
+
+// function to check dealers ace count
+function checkAce(card){
+    if (card[0] == 'A') {
+        return 1;
+    } 
+    return 0;
 }
