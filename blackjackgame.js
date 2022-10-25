@@ -7,11 +7,11 @@ let dealerAceCount = 0;
 let myAceCount = 0;
 
 // keep track of value of dealers hidden card
-let hidden
-let deck
+let hidden;
+let deck;
 
 // lets player draw cards while mySum <= 21
-let canHit
+let canHit = true;
 
 window.onload = function () {
     buildingDeck();
@@ -71,6 +71,57 @@ function beginGame () {
         document.getElementById("my-cards").append(cardImg)
     }
     console.log(mySum)
+
+    document.getElementById("hit").addEventListener("click", hit);
+    document.getElementById("stay").addEventListener("click", stay);
+}
+
+// function for hit button
+function hit() {
+    if (!canHit) {
+        return;
+    }
+
+    let cardImg = document.createElement("img")
+    let card = deck.pop()
+    cardImg.src = "./cards/" + card + ".png"
+    mySum += getValue(card)
+    myAceCount += checkAce(card)
+    document.getElementById("my-cards").append(cardImg)
+
+    if (reduceAce(mySum, myAceCount) > 21) {
+        canHit = false;
+    }
+}
+
+// function for stay button
+function stay() {
+    dealerSum = reduceAce(dealerSum, dealerAceCount);
+    mySum = reduceAce(mySum, myAceCount);
+
+    canHit = false;
+    document.getElementById("hidden").src = "./cards/" + hidden + ".png";
+
+    let message = ""
+    if (mySum > 21) {
+        message = "YOU LOSE!"
+    }
+    else if (dealerSum > 21) {
+        message = "YOU WIN!"
+    }
+    else if (mySum == dealerSum) {
+        message = "TIE!"
+    }
+    else if (mySum > dealerSum) {
+        message = "YOU WIN!"
+    }
+    else if (mySum < dealerSum) {
+        message = "YOU LOSE!"
+    }
+
+    document.getElementById("dealers-sum").innerText = dealerSum;
+    document.getElementById("my-sum").innerText = mySum;
+    document.getElementById("results").innerText = message;
 }
 
 function getValue (card) {
@@ -92,4 +143,12 @@ function checkAce(card){
         return 1;
     } 
     return 0;
+}
+// function to reduce ace
+function reduceAce(mySum, myAceCount) {
+    while (mySum > 21 && myAceCount > 0) {
+        mySum -= 10;
+        myAceCount -= 1;
+    }
+    return mySum;
 }
