@@ -1,17 +1,17 @@
 // Set global variables
-let dealerSum = 0;
-let mySum = 0;
+var dealerSum = 0;
+var mySum = 0;
 
 // keep track of the aces both you and dealer have since Ace counts as 11 or 1
-let dealerAceCount = 0;
-let myAceCount = 0;
+var dealerAceCount = 0;
+var myAceCount = 0;
 
 // keep track of value of dealers hidden card
-let hidden;
-let deck;
+var hidden;
+var deck;
 
 // lets player draw cards while mySum <= 21
-let canHit = true;
+var canHit = true;
 
 window.onload = function () {
     buildingDeck();
@@ -89,6 +89,7 @@ function hit() {
     myAceCount += checkAce(card)
     document.getElementById("my-cards").append(cardImg)
 
+    //reduceAce checks for your sum and also takes in consideration your ace count
     if (reduceAce(mySum, myAceCount) > 21) {
         canHit = false;
     }
@@ -124,6 +125,12 @@ function stay() {
     document.getElementById("results").innerText = message;
 }
 
+// function to restart the game after playing
+function restart() {
+    window.location = ""; /* Reloads the tab */
+    }
+
+// function that gets value of the card
 function getValue (card) {
     let data = card.split("-")
     let value = data[0]

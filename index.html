@@ -9,10 +9,12 @@
         <script src="blackjackgame.js"></script>
     </head>
     <body>
-        <h1>Lets Play BlackJack!</h1>
+        <div id="header">
+            <h1>Lets Play BlackJack!</h1>
+        </div>
             <h2>Dealer's Hand: <span id="dealers-sum"></span></h2>
             <div id="dealers-cards">
-                <img src="./cards/BACK.png" alt="back of a playing card">
+                <img id="hidden" src="./cards/BACK.png" alt="back of a playing card">
             </div> 
 
             <h2>My Hand: <span id="my-sum"></span></h2>
@@ -23,4 +25,7 @@
         <button id="stay">I'll Stay!</button>
         <p id="results"></p>
     </body>
+    <footer>
+        <a href=""><button id="restart-btn">Restart</button></a>
+    </footer>
 </html>
